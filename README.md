@@ -7,7 +7,9 @@ Go言語でACO(Ant Colony Optimization)
 ・hellow, world！！
 
 【ようやく立てた気がする子鹿】
+
 ・独自パッケージ作成でつまづく。
+
 ・パッケージ作成手順
 　１．GOPATHを通す(export GOPATH="作業ディレクトリ")
 　２．作業ディレクトリ配下にsrc/を作成
