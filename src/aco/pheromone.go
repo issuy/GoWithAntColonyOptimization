@@ -1,10 +1,5 @@
 package aco
 
-import (
-	"errors"
-	"fmt"
-)
-
 type Pheromone struct {
 	init   float64
 	dtau   float64
@@ -12,45 +7,30 @@ type Pheromone struct {
 	tau    [][]float64
 }
 
-func InitPheromone(init float64, dtau float64, length int) (pheromone Pheromone) {
-	pheromone.init = init
-	pheromone.dtau = dtau
-	pheromone.length = length
-
+func NewPheromone(init float64, dtau float64, length int) *Pheromone {
 	tau := make([][]float64, length)
-	for key1, _ := range tau {
-		tmp := make([]float64, length)
-		go func() {
-			for key2, _ := range tmp {
-				tmp[key2] = init
-			}
-		}()
-		tau[key1] = tmp
+	for i := range tau {
+		tau[i] = make([]float64, length)
+		for j := range tau {
+			tau[i][j] = init
+		}
 	}
-	pheromone.tau = tau
-	return
+
+	return &Pheromone{init, dtau, length, tau}
 }
 
-func CheckPheromoneInit(pheromone Pheromone) error {
-	fmt.Printf("[Check pheromone start] init:%f dtau:%f length:%d\n", pheromone.init, pheromone.dtau, pheromone.length)
+func (p *Pheromone) Init() float64 {
+	return p.init
+}
 
-	if len(pheromone.tau) == pheromone.length {
-		for _, value1 := range pheromone.tau {
-			if len(value1) != pheromone.length {
-				fmt.Println("[Check pheromone end] Init is failed.")
-				return errors.New("Invalid argument")
-			}
-			for _, value2 := range value1 {
-				if value2 != pheromone.init {
-					fmt.Println("[Check pheromone end] Init is failed.")
-					return errors.New("Invalid argument")
-				}
-			}
-		}
-	} else {
-		fmt.Println("[Check pheromone end] Init is failed.")
-		return errors.New("Invalid argument")
-	}
-	fmt.Println("[Check pheromone end] Init is succeeded.")
-	return nil
+func (p *Pheromone) Dtau() float64 {
+	return p.dtau
+}
+
+func (p *Pheromone) Length() int {
+	return p.length
+}
+
+func (p *Pheromone) Tau() *[][]float64 {
+	return &p.tau
 }
