@@ -13,16 +13,18 @@ type City struct {
 }
 
 func CreateCities(lineReader *bufio.Reader) []City {
-	var cities [100]City
+	cities := make([]City, 0, 0)
 
 	lineNumber := 0
 	for line, _, e := lineReader.ReadLine(); e == nil; line, _, e = lineReader.ReadLine() {
 		row := strings.Split(string(line), " ")
-		cities[lineNumber].num, _ = strconv.Atoi(row[0])
-		cities[lineNumber].x, _ = strconv.ParseFloat(row[1], 64)
-		cities[lineNumber].y, _ = strconv.ParseFloat(row[2], 64)
+		var city City
+		city.num, _ = strconv.Atoi(row[0])
+		city.x, _ = strconv.ParseFloat(row[1], 64)
+		city.y, _ = strconv.ParseFloat(row[2], 64)
+		cities = append(cities, city)
 		lineNumber++
 	}
 
-	return cities[:lineNumber]
+	return cities
 }
