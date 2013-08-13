@@ -13,7 +13,7 @@ type City struct {
 }
 
 func CreateCities(lineReader *bufio.Reader) []City {
-	cities := make([]City, 0, 0)
+	cities := make([]City, 0, 100)
 
 	lineNumber := 0
 	for line, _, e := lineReader.ReadLine(); e == nil; line, _, e = lineReader.ReadLine() {
